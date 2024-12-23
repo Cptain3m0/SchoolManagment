@@ -125,7 +125,7 @@ para iniciar el servidor utilizar:
 ### 4.2. Instalación
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/bulux-dev
+   git clone https://github.com/Cptain3m0/SchoolManagment.git
 
 
 
