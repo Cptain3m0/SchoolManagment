@@ -1,18 +1,16 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../config/database');  // Asegúrate de que esta ruta sea correcta
 
 const Curso = sequelize.define('Curso', {
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   codigo: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
-  },
-  nombre: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   }
-}, {
-  timestamps: false
 });
 
 module.exports = Curso;

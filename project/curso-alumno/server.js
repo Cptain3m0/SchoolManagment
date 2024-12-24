@@ -1,52 +1,20 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const sequelize = require('./config/database');
+const Curso = require('./models/curso');
+const Alumno = require('./models/alumno');
+const Inscripcion = require('./models/inscripcion');
+
 const app = express();
 const port = 3000;
-const cors = require('cors')
-const Curso = require('./models/curso')
-const Alumno = require('./models/alumno');
-// Importar rutas
-const cursoRoutes = require('./routes/cursoRoutes');
-const alumnoRoutes = require('./routes/alumnoRoutes');
-const inscripcionRoutes = require('./routes/inscripcionRoutes');
 
-app.use(bodyParser.json());
-
-app.use(cors());
-// Conectar con la base de datos
-sequelize.authenticate()
+sequelize.sync()
   .then(() => {
-    console.log('Conexión a la base de datos establecida.');
+    console.log('Base de datos sincronizada');
   })
-  .catch(err => {
-    console.error('No se pudo conectar a la base de datos:', err);
+  .catch((error) => {
+    console.error('Error al sincronizar la base de datos:', error);
   });
-
-
-  // Usar rutas
-app.use('/api/cursos', cursoRoutes);
-
-app.use('/api', cursoRoutes);
-app.use('/api', alumnoRoutes);
-app.use('/api', inscripcionRoutes);
-app.use('/api/inscripciones',inscripcionRoutes);
-//app.use('/api/inscripciones', inscripcionRoutes);
-
-// Ruta raíz
-app.get('/', (req, res) => {
-  res.send('API de Gestión de Cursos, Alumnos e Inscripciones');
-});
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
 });
-
-// Sincronizar modelos con la base de datos/*
-sequelize.sync({ force: false }).then(() => {
-  console.log('Modelos sincronizados con la base de datos.');
-}).catch(err => {
-  console.error('Error al sincronizar los modelos:', err);
-});
-
-
